@@ -37,7 +37,7 @@ function listEmployees(roster) {
     console.log('monthlySalary', monthlySalary);
     
   } // end for
-  $('#monthlyTotal').text(`${monthlySalary}`);
+  $('#monthlyTotal').text(`${parseInt(monthlySalary)}`);
   if (monthlySalary > 20000) {
     $('#monthlyTotal').addClass('warning');
   } else {
@@ -50,5 +50,5 @@ function listEmployees(roster) {
 function onReady() {
   console.log('jQuery onReady loaded');
   console.log('employees:', employees);
-  
+  listEmployees(employees);
 }
