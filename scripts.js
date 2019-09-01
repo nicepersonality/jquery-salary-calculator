@@ -18,6 +18,23 @@ employees.push(new Employee('Roy', 'Smith', 9623, 'Quality Assurance', 48000));
 
 // component functions
 
+function addEmployee(roster) {
+  // If all the fields are filled out, generate a new Employee from the values,
+  // push the new Employee to the employees roster, and regenerate the table.
+  let newFirstName = $('#firstName').val();
+  let newLastName = $('#lastName').val();
+  let newEmplId = $('#emplId').val();
+  let newEmplTitle = $('#emplTitle').val();
+  let newSalary = $('#salary').val();
+  if (newFirstName && newLastName && newEmplId && newEmplTitle && newSalary) {
+    roster.push(new Employee(newFirstName, newLastName, newEmplId, newEmplTitle, newSalary));
+    listEmployees(roster);
+    $('#addEmployeeForm input').val('');
+  } else {
+    alert('Please fill out all values to add a new employee.');
+  } // end if
+} // end addEmployee
+
 function listEmployees(roster) {
   // Replace the current contents of the employee table with the data
   // supplied to the function (an array of Employees).
@@ -51,4 +68,7 @@ function onReady() {
   console.log('jQuery onReady loaded');
   console.log('employees:', employees);
   listEmployees(employees);
+  $('#submitEmployee').on('click', function(){
+    addEmployee(employees);
+  });
 }
