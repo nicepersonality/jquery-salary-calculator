@@ -52,7 +52,10 @@ function formatCurrency(num) {
   // and this seemed much simpler than using an additional plugin.
   // source: https://blog.abelotech.com/posts/number-currency-formatting-javascript/
   // author: Tom Pawlek
-  return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+  // If you would rather see how much I could figure out on my own,
+  // comment out the above line and instead use:
+  return '$' + num.toFixed(2);
 } // end formatCurrency
 
 function listEmployees(roster) {
