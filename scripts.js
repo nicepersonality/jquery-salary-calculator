@@ -46,6 +46,15 @@ function deleteEmployee() {
   listEmployees(employees);
 } // end deleteEmployee
 
+function formatCurrency(num) {
+  // I cannot take credit for this bit of regular expression wizardry.
+  // I just googled for ways to format numbers in jQuery,
+  // and this seemed much simpler than using an additional plugin.
+  // source: https://blog.abelotech.com/posts/number-currency-formatting-javascript/
+  // author: Tom Pawlek
+  return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+} // end formatCurrency
+
 function listEmployees(roster) {
   // Replace the current contents of the employee table with the data
   // supplied to the function (an array of Employees).
@@ -59,8 +68,9 @@ function listEmployees(roster) {
     $tr.append(`<td class="colLastName">${roster[i].lastName}</td>`);
     $tr.append(`<td class="colEmplId">${roster[i].emplId}</td>`);
     $tr.append(`<td class="colEmplTitle">${roster[i].emplTitle}</td>`);
-    $tr.append(`<td class="colSalary">${roster[i].salary}</td>`);
-    $tr.append(`<td><button data-row="${i}">Delete</button></td>`);
+    let prettySalary = formatCurrency(roster[i].salary);
+    $tr.append(`<td class="colSalary">${prettySalary}</td>`);
+    $tr.append(`<td class="colDelete"><button data-row="${i}">Delete</button></td>`);
     $('#employeeTable tbody').append($tr);
     // bind the delete function to the button
     // TODO: rewrite this to call deleteEmployee with explicit
@@ -69,7 +79,7 @@ function listEmployees(roster) {
     // tally up the additional monthly salary
     monthlySalary += (roster[i].salary) / 12;
   } // end for
-  $('#monthlyTotal').text(`${parseInt(monthlySalary)}`);
+  $('#monthlyTotal').text(`${formatCurrency(monthlySalary)}`);
   if (monthlySalary > 20000) {
     $('#monthlyTotal').addClass('warning');
   } else {
