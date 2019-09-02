@@ -36,12 +36,14 @@ function addEmployee(roster) {
 } // end addEmployee
 
 function deleteEmployee() {
-  // Delete the employee at the index value i from the array roster,
+  // Delete the employee at the index value of the button that called the function,
   // then display the updated employee list.
+  // TODO: rewrite this function to accept parameters for the array and index
+  // rather than hardcoding the array and relying on being called by a specific element
   let index=$(this).data('row');
-  console.log('in deleteEmployee; index:', index);
-  
-  
+  // console.log('in deleteEmployee; index:', index);
+  employees.splice(index, 1);
+  listEmployees(employees);
 } // end deleteEmployee
 
 function listEmployees(roster) {
@@ -61,6 +63,8 @@ function listEmployees(roster) {
     $tr.append(`<td><button data-row="${i}">Delete</button></td>`);
     $('#employeeTable tbody').append($tr);
     // bind the delete function to the button
+    // TODO: rewrite this to call deleteEmployee with explicit
+    // array and index parameters
     $(`button[data-row="${i}"]`).on('click', deleteEmployee);
     // tally up the additional monthly salary
     monthlySalary += (roster[i].salary) / 12;
