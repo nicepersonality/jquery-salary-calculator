@@ -35,24 +35,35 @@ function addEmployee(roster) {
   } // end if
 } // end addEmployee
 
+function deleteEmployee() {
+  // Delete the employee at the index value i from the array roster,
+  // then display the updated employee list.
+  let index=$(this).data('row');
+  console.log('in deleteEmployee; index:', index);
+  
+  
+} // end deleteEmployee
+
 function listEmployees(roster) {
   // Replace the current contents of the employee table with the data
   // supplied to the function (an array of Employees).
   // Also, calculate the monthly total salary load.
   let monthlySalary = 0;
   $('#employeeTable tbody').empty();
-  for (employee of roster) {
+  for (i in roster) {
+    // add the table row
     let $tr = $('<tr></tr>');
-    $tr.append(`<td class="colFirstName">${employee.firstName}</td>`);
-    $tr.append(`<td class="colLastName">${employee.lastName}</td>`);
-    $tr.append(`<td class="colEmplId">${employee.emplId}</td>`);
-    $tr.append(`<td class="colEmplTitle">${employee.emplTitle}</td>`);
-    $tr.append(`<td class="colSalary">${employee.salary}</td>`);
-    $tr.append(`<td><button class="deleteRow">Delete</button></td>`);
+    $tr.append(`<td class="colFirstName">${roster[i].firstName}</td>`);
+    $tr.append(`<td class="colLastName">${roster[i].lastName}</td>`);
+    $tr.append(`<td class="colEmplId">${roster[i].emplId}</td>`);
+    $tr.append(`<td class="colEmplTitle">${roster[i].emplTitle}</td>`);
+    $tr.append(`<td class="colSalary">${roster[i].salary}</td>`);
+    $tr.append(`<td><button data-row="${i}">Delete</button></td>`);
     $('#employeeTable tbody').append($tr);
-    monthlySalary += (employee.salary) / 12;
-    console.log('monthlySalary', monthlySalary);
-    
+    // bind the delete function to the button
+    $(`button[data-row="${i}"]`).on('click', deleteEmployee);
+    // tally up the additional monthly salary
+    monthlySalary += (roster[i].salary) / 12;
   } // end for
   $('#monthlyTotal').text(`${parseInt(monthlySalary)}`);
   if (monthlySalary > 20000) {
@@ -66,7 +77,6 @@ function listEmployees(roster) {
 
 function onReady() {
   console.log('jQuery onReady loaded');
-  console.log('employees:', employees);
   listEmployees(employees);
   $('#submitEmployee').on('click', function(){
     addEmployee(employees);
